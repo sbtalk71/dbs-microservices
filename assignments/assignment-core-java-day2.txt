@@ -1,0 +1,34 @@
+1. Create a Java Project with relevant packages
+2. Create a class Customer as follows:
+public class Customer {
+private int custId;
+private String customerName;
+
+//create default Constructor
+//create Constructor with all parameters
+//generate setter and getter for all variables
+
+}
+
+
+3. Create a class named CustomerDB as given:
+public class CustomerDB {
+	
+	private Customer[] customerList=new Customer[6];
+	
+	//write the no args constructor and populate the Customer[] array with 6 Customer Objects
+	// example code would be like 
+	//	Customer[0]=new Customer(100,"John");
+	// so goes for other 5 objects
+	//implement the following method
+	
+	public String findCustomerById(int id) throws CustomerNotFoundException{
+		//write the finder logic here which searches the array for the object of Customer with the given id (custId in Customer class)
+		
+	}
+		
+}
+
+4. Write a program to serialize the above CusomerDB to a file named "csuomerDB.ser". Make necessary adjustments to the class for Serialization.
+
+5. Write an application/Program to de serialize the CustomerDB and call findCustomerById method to search a Customer by custId;
