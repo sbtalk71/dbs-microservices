@@ -12,16 +12,17 @@ public class EmpSerializer {
 				ObjectOutputStream oos1 = new ObjectOutputStream(new FileOutputStream("empdata.ser",true)) {
 					protected void writeStreamHeader() throws IOException {
 						reset();
+						System.out.println("Stream Header while writing Object..");
 					};
 				};) {
-			Emp e = new Emp(103, "John", 25);
+			/*Emp e = new Emp(103, "John", 25);
 
 			Emp e1 = new Emp(104, "Scott", 34);
 			Emp e2 = new Emp(105, "Maria", 54);
-			oos.writeObject(e);
+			oos1.writeObject(e);
 			
 			oos1.writeObject(e1);
-			oos1.writeObject(e2);
+			oos1.writeObject(e2);*/
 			System.out.println("emp serialized...");
 
 		} catch (IOException e) {
