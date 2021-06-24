@@ -9,7 +9,7 @@ public class Q {
 		if(valueSet) {
 			try {
 				wait();
-			} catch (InterruptedException e) {
+			} catch (Exception e) {
 				e.printStackTrace();
 			}
 		}
@@ -24,7 +24,7 @@ public class Q {
 		if(!valueSet) {
 			try {
 				wait();
-			} catch (InterruptedException e) {
+			} catch (Exception e) {
 				e.printStackTrace();
 			}
 		}
