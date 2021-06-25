@@ -3,32 +3,30 @@ package com.demo.jdbc;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class PstDemo {
+public class PstInsertDemo {
 
 	public static void main(String[] args) {
 
 		Connection conn = null;
 		PreparedStatement pst = null;
-		ResultSet rs = null;
-		String emp_query ="select * from employee where salary between ? and ?";
+		String emp_query ="insert into employee(empno,name,address,salary) values (?,?,?,?)";
 		
 		try {
 			Class.forName("org.mariadb.jdbc.Driver");
 			conn = DriverManager.getConnection("jdbc:mariadb://localhost:3305/springdb", "root", "admin");
 			
 			pst=conn.prepareStatement(emp_query);
-			pst.setDouble(1, 20000);
-			pst.setDouble(2, 50000);
 			
-			rs=pst.executeQuery();
+			pst.setInt(1,201);
+			pst.setString(2,"Scott");
+			pst.setString(3,"Chennai");
+			pst.setDouble(4,78000);
+			
+			int count=pst.executeUpdate();
+			System.out.println("rows inserted : "+count);
 		
-			
-			while(rs.next()) {
-				System.out.println(rs.getInt("EMPNO")+" "+rs.getString("NAME")+" "+rs.getString("ADDRESS")+" "+rs.getDouble("SALARY"));
-			}
 			
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
