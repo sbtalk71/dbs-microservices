@@ -18,6 +18,7 @@ public class EmpDaoImpl implements EmpDao {
 			pst.setInt(1, id);
 
 			ResultSet rs = pst.executeQuery();
+			
 			while (rs.next()) {
 				emp = new Emp(rs.getInt("EMPNO"), rs.getString("NAME"), rs.getString("ADDRESS"),
 						rs.getDouble("SALARY"));
