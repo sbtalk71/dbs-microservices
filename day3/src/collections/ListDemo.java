@@ -4,6 +4,7 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.ListIterator;
+import java.util.Vector;
 
 public class ListDemo {
 
@@ -11,7 +12,8 @@ public class ListDemo {
 		
 		
 		//List<String> nameList=new ArrayList<>();
-		List<String> nameList=new LinkedList<>();
+		//List<String> nameList=new LinkedList<>();
+		List<String> nameList=new Vector<>();
 		
 		nameList.add("Shantanu");
 		nameList.add("Pavan");
