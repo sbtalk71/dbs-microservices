@@ -17,7 +17,7 @@ public class InsertDemo {
 
 		JdbcTemplate jt = ctx.getBean(JdbcTemplate.class);
 
-		/*int count = jt.update(new PreparedStatementCreator() {
+		int count = jt.update(new PreparedStatementCreator() {
 
 			public PreparedStatement createPreparedStatement(Connection con) throws SQLException {
 
@@ -29,9 +29,9 @@ public class InsertDemo {
 				pst.setDouble(4, 56000);
 				return pst;
 			}
-		});*/
+		});
 
-		int count = jt.update((con) ->{
+		int count1 = jt.update((con) ->{
 
 				PreparedStatement pst = con
 						.prepareStatement("insert into employee(empno,name,address,salary) values(?,?,?,?)");

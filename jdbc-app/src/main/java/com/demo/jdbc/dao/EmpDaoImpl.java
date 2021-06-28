@@ -33,8 +33,22 @@ public class EmpDaoImpl implements EmpDao {
 
 	@Override
 	public String save(Emp e) {
-		// TODO Auto-generated method stub
-		return null;
+		int count=0;
+		try {
+			PreparedStatement pst = getConnection().prepareStatement(
+					"insert into employee(empno,name,address,salary) values(?,?,?,?)");
+			pst.setInt(1,e.getEmpId());
+			pst.setString(2, e.getName());
+			pst.setString(3, e.getCity());
+			pst.setDouble(4, e.getSalary());
+			
+		count=	pst.executeUpdate();
+		
+		}catch(SQLException ex) {
+			ex.printStackTrace();
+			throw new RuntimeException("Data could not be saved..");
+		}
+		return "Data Saved "+count;
 	}
 
 	@Override
@@ -45,7 +59,8 @@ public class EmpDaoImpl implements EmpDao {
 
 	@Override
 	public String delete(int id) {
-		// TODO Auto-generated method stub
+
+		
 		return null;
 	}
 
