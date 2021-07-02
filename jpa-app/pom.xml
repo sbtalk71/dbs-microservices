@@ -6,6 +6,7 @@
 	<artifactId>jpa-app</artifactId>
 	<version>1.0</version>
 	<name>jpa-app</name>
+	<packaging>jar</packaging>
 	<properties>
 		<maven.compiler.source>11</maven.compiler.source>
 		<maven.compiler.target>11</maven.compiler.target>

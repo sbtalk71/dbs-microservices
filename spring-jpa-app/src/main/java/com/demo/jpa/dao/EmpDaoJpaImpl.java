@@ -17,8 +17,6 @@ import com.demo.jpa.entity.Emp;
 @Repository
 public class EmpDaoJpaImpl implements EmpDao {
 
-	//private static EntityManagerFactory emf = Persistence.createEntityManagerFactory("jpa1");
-
 	@PersistenceContext
 	EntityManager em;
 	
