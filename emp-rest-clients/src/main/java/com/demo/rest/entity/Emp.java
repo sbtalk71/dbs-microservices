@@ -1,21 +1,15 @@
-package com.demo.spring.entity;
+package com.demo.rest.entity;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+
 import javax.xml.bind.annotation.XmlRootElement;
 
-@Entity
-@Table(name="EMPLOYEE")
 @XmlRootElement
 public class Emp {
-    @Id
-    @Column(name="EMPNO")
+
     private int empId;
     private String name;
 
-    @Column(name="ADDRESS")
+
     private String city;
     private double salary;
 
@@ -59,5 +53,15 @@ public class Emp {
 
     public void setSalary(double salary) {
         this.salary = salary;
+    }
+
+    @Override
+    public String toString() {
+        return "Emp{" +
+                "empId=" + empId +
+                ", name='" + name + '\'' +
+                ", city='" + city + '\'' +
+                ", salary=" + salary +
+                '}';
     }
 }
