@@ -1,0 +1,10 @@
+spring:
+  datasources:
+    driver-class-name: org.mariadb.jdbc.Driver
+    url: jdbc:mariadb://localhost:3305/springdb
+    username: root
+    password: admin
+    name: myds
+
+  jpa:
+    show-sql: true

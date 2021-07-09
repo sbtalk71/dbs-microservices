@@ -1,10 +1,12 @@
 package com.demo.spring;
 
 import com.demo.spring.entity.Emp;
+import com.demo.spring.entity.EmpWrapper;
 import com.demo.spring.repository.EmpRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -17,8 +19,14 @@ public class EmpDataController {
     @Value("${app.name}")
     String appName;
 
-    @Autowired
+   // @Autowired
     private EmpRepository repo;
+
+    //public EmpDataController(){}
+    public EmpDataController(EmpRepository repo){
+        this.repo=repo;
+    }
+
 
     //GET http://localhost:8080/add?x=20&y=30
     @RequestMapping(path="/add",method = RequestMethod.GET,produces = "text/plain")
@@ -29,58 +37,67 @@ public class EmpDataController {
 
 //@RequestMapping(path="find/{empid}", produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.GET)
 @GetMapping(path="find/{empid}",produces = {MediaType.APPLICATION_JSON_VALUE,MediaType.APPLICATION_XML_VALUE})
-public Emp findEmp(@PathVariable("empid") int id,@RequestHeader(required = false,name="name") String headerValue) {
+public ResponseEntity findEmp(@PathVariable("empid") int id,@RequestHeader(required = false,name="name") String headerValue) {
         System.out.println("The header : "+headerValue);
     System.out.println("The App Name : "+appName);
     Optional<Emp> empOp=repo.findById(id);
     if(empOp.isPresent()){
-        return empOp.get();
+        return ResponseEntity.ok(empOp.get());
     }else{
-        throw new RuntimeException("Emp Not Found..");
+        //return ResponseEntity.ok("Emp Not Found..");
+        //throw new EmpNotFoundException("Emp Not found with id "+id);
+        return ResponseEntity.status(404).body("Emp Not Found");
     }
 
 }
 
 @PostMapping(path="save",consumes = MediaType.APPLICATION_JSON_VALUE,produces = MediaType.TEXT_PLAIN_VALUE)
-public String saveEmp(@RequestBody Emp e){
+public ResponseEntity<String> saveEmp(@RequestBody Emp e){
         if(repo.existsById(e.getEmpId())){
-            return "Emp Exists";
+            return ResponseEntity.ok("Emp Exists");
         }else {
             repo.save(e);
-            return "Emp saved";
+            return ResponseEntity.ok("Emp saved");
         }
 
 }
     @PutMapping(path="update",consumes = MediaType.APPLICATION_JSON_VALUE,produces = MediaType.TEXT_PLAIN_VALUE)
-    public String updateEmp(Emp e){
+    public ResponseEntity<String> updateEmp(Emp e){
         if(repo.existsById(e.getEmpId())){
             repo.save(e);
-            return "Emp Updated";
+            return ResponseEntity.ok("Emp Updated");
         }else {
 
-            return "Emp Not Found";
+            return ResponseEntity.ok("Emp Not Found");
         }
     }
     @DeleteMapping(path="delete",produces = MediaType.TEXT_PLAIN_VALUE)
-    public String deleteEmp(@RequestParam("empid") int id){
+    public ResponseEntity<String> deleteEmp(@RequestParam("empid") int id){
         if(repo.existsById(id)){
             repo.deleteById(id);
-            return "Emp Deleted";
+            return ResponseEntity.ok("Emp Deleted");
         }else {
 
-            return "Emp Not Found";
+            return ResponseEntity.ok("Emp Not Found");
         }
     }
 
-    @GetMapping( produces = MediaType.APPLICATION_JSON_VALUE)
-    public List<Emp> listAllEmps(){
-        return repo.findAll();
+    @GetMapping( produces = {MediaType.APPLICATION_JSON_VALUE,MediaType.APPLICATION_XML_VALUE})
+    public ResponseEntity<EmpWrapper> listAllEmps(){
+        EmpWrapper emps=new EmpWrapper();
+        List<Emp> empList=repo.findAll();
+        emps.setEmps(empList);
+        return ResponseEntity.ok(emps);
     }
 
-    @GetMapping( path="range",produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping( path="range",produces = {MediaType.APPLICATION_JSON_VALUE,MediaType.APPLICATION_XML_VALUE})
     public List<Emp> listRange(@RequestParam("value1") int id1, @RequestParam("value2")int id2){
         return repo.findRange(id1,id2);
 
     }
 
+    @ExceptionHandler(EmpNotFoundException.class)
+    public ResponseEntity<String> handleAllExceptions(EmpNotFoundException ex){
+        return ResponseEntity.ok(ex.getMessage());
+    }
 }
